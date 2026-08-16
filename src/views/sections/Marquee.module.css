@@ -1,0 +1,55 @@
+/*
+ * Decorative scrolling wordmark. Purely typographic texture — it carries no
+ * information, so it is hidden from assistive tech and dropped entirely on
+ * small screens rather than shrunk.
+ */
+
+.marquee {
+  overflow: hidden;
+  margin-block-start: clamp(var(--space-10), 7vh, 5rem);
+  user-select: none;
+}
+
+.track {
+  display: inline-flex;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 30s linear infinite;
+}
+
+.text {
+  color: rgba(12, 26, 27, 0.08);
+  font-size: var(--text-marquee);
+  font-weight: 800;
+  letter-spacing: var(--tracking-tight);
+}
+
+/* Two identical copies; translating by half the track loops seamlessly. */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+[dir="rtl"] .track {
+  animation-name: marquee-rtl;
+}
+
+@keyframes marquee-rtl {
+  to {
+    transform: translateX(50%);
+  }
+}
+
+@media (max-width: 900px) {
+  .marquee {
+    display: none;
+  }
+}
+
+/* Endless motion is exactly what reduced-motion is asking us to stop. */
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}

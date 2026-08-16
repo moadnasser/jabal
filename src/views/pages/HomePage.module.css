@@ -1,0 +1,6 @@
+/* The single content column every section sits inside. */
+.main {
+  max-width: var(--layout-max);
+  margin-inline: auto;
+  padding-inline: var(--space-gutter);
+}

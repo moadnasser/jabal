@@ -1,0 +1,164 @@
+/*
+ * Sticky header. Below 900px the section links collapse into a panel behind
+ * the menu button; below 560px the language pill and the call to action move
+ * into that panel too, leaving the header as mark + menu.
+ */
+
+.header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--z-sticky);
+  background: var(--color-glass);
+  border-block-end: 1px solid var(--color-border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: var(--layout-max);
+  margin-inline: auto;
+  padding: var(--space-3) var(--space-gutter);
+}
+
+.brand {
+  margin-inline-end: auto;
+}
+
+/* ── Desktop links ───────────────────────────────────────────────────── */
+.links {
+  display: flex;
+  align-items: center;
+  gap: clamp(var(--space-4), 2vw, var(--space-8));
+}
+
+.link {
+  position: relative;
+  padding-block: var(--space-2);
+  color: var(--color-ink);
+  font-size: 0.84375rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.link:hover {
+  color: var(--color-teal);
+}
+
+/* Underline marks the section currently in view. It animates on width from a
+   transform so it never reflows the row. */
+.link::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-teal);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.link[aria-current="true"] {
+  color: var(--color-teal);
+}
+
+.link[aria-current="true"]::after,
+.link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ── Menu button ─────────────────────────────────────────────────────── */
+.menuButton {
+  display: none;
+  place-items: center;
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.menuButton:hover {
+  background: var(--color-teal-soft);
+  border-color: var(--color-teal);
+}
+
+/* ── Mobile panel ────────────────────────────────────────────────────── */
+.panel {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-1);
+  max-height: calc(100dvh - var(--nav-height));
+  overflow-y: auto;
+  padding: var(--space-2) var(--space-gutter) var(--space-4);
+  border-block-start: 1px solid var(--color-border);
+  overscroll-behavior: contain;
+}
+
+.panelLink {
+  display: flex;
+  align-items: center;
+  min-height: 2.875rem;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  color: var(--color-ink);
+  font-size: 0.96875rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.panelLink:hover,
+.panelLink[aria-current="true"] {
+  background: var(--color-teal-soft);
+  color: var(--color-teal);
+}
+
+.panelDivider {
+  margin-block: var(--space-3) var(--space-1);
+  padding-block-start: var(--space-3);
+  border-block-start: 1px solid var(--color-border);
+}
+
+.panelCta {
+  margin-block-start: var(--space-3);
+}
+
+/* ── Breakpoints ─────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .links {
+    display: none;
+  }
+
+  .menuButton {
+    display: grid;
+  }
+
+  .panel {
+    display: flex;
+  }
+}
+
+@media (max-width: 560px) {
+  .langPill,
+  .cta {
+    display: none;
+  }
+}
+
+/* Above the breakpoint the panel's own language switch is redundant. */
+@media (min-width: 561px) {
+  .panelLang {
+    display: none;
+  }
+}

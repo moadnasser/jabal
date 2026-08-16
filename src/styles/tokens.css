@@ -1,0 +1,120 @@
+/*
+ * Design tokens — the single source of truth for the Jabal Al Hadeed look.
+ * Nothing below the token layer should ever hardcode a raw hex value.
+ */
+
+:root {
+  /* ── Brand ─────────────────────────────────────────────────────────── */
+  --color-teal: #0d5457;
+  --color-teal-hover: #0a4144;
+  --color-teal-soft: #e4efef;
+  --color-teal-bright: #5fbfc3; /* for use on dark surfaces only */
+  --color-teal-light: #7fcfd2; /* icon glyphs on dark surfaces */
+
+  --color-ink: #0c1a1b; /* darkest surface + primary text */
+  --color-ink-raised: #132a2c; /* cards sitting on an ink surface */
+  --color-paper: #f4f6f6; /* page ground */
+  --color-surface: #ffffff; /* cards on the page ground */
+
+  /* ── Text ──────────────────────────────────────────────────────────── */
+  --color-text: var(--color-ink);
+  --color-text-muted: #5f7274; /* 5.06:1 on white, 4.67:1 on paper */
+  --color-text-on-dark: #ffffff;
+  --color-text-on-dark-muted: rgba(255, 255, 255, 0.66); /* 6.35:1 on ink */
+  --color-text-on-dark-faint: rgba(255, 255, 255, 0.55); /* meta text, 5.2:1 */
+  --color-label-on-dark: #8fa5a7;
+
+  --color-danger: #b3261e;
+  --color-success: #0f6f4a;
+
+  /* ── Lines & scrims ────────────────────────────────────────────────── */
+  --color-border: rgba(12, 26, 27, 0.08);
+  --color-border-strong: rgba(12, 26, 27, 0.14);
+  --color-border-on-dark: rgba(255, 255, 255, 0.1);
+  --color-glass: rgba(255, 255, 255, 0.9);
+
+  /* ── Type ──────────────────────────────────────────────────────────── */
+  --font-sans: "Manrope", system-ui, -apple-system, sans-serif;
+
+  --text-2xs: 0.65rem; /* 10.4px — tracked uppercase labels only */
+  --text-xs: 0.6875rem; /* 11px  — kickers, badges */
+  --text-sm: 0.8125rem; /* 13px  — meta */
+  --text-base: 0.875rem; /* 14px  — card body */
+  --text-md: 0.96875rem; /* 15.5px — lead body */
+  --text-lg: 1.09375rem; /* 17.5px — card titles */
+  --text-xl: 1.1875rem; /* 19px  — brand names */
+
+  /* Fluid display sizes */
+  --text-display: clamp(2.125rem, 5.2vw, 4rem);
+  --text-heading: clamp(1.6875rem, 3.4vw, 2.625rem);
+  --text-stat: clamp(1.875rem, 3.6vw, 2.75rem);
+  --text-marquee: clamp(2.375rem, 6vw, 4.625rem);
+
+  --leading-tight: 1.14;
+  --leading-snug: 1.25;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.7;
+
+  --tracking-tight: -0.02em;
+  --tracking-label: 0.14em;
+
+  /* ── Space (4px rhythm) ────────────────────────────────────────────── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+
+  /* Section rhythm scales with the viewport */
+  --space-section: clamp(3.5rem, 9vh, 6rem);
+  --space-block: clamp(1.75rem, 4vh, 2.75rem);
+  --space-pad-lg: clamp(2rem, 5vw, 3.75rem);
+  --space-gutter: clamp(0.875rem, 2vw, 1.75rem);
+
+  /* ── Radius ────────────────────────────────────────────────────────── */
+  --radius-sm: 0.875rem; /* 14px — buttons, small chips */
+  --radius-md: 1.25rem; /* 20px — list cards */
+  --radius-lg: 1.375rem; /* 22px — feature cards */
+  --radius-xl: 1.625rem; /* 26px — media, panels */
+  --radius-2xl: 1.875rem; /* 30px — full-bleed sections */
+  --radius-pill: 999px;
+
+  /* ── Elevation ─────────────────────────────────────────────────────── */
+  --shadow-sm: 0 14px 34px rgba(12, 26, 27, 0.14);
+  --shadow-md: 0 16px 36px rgba(12, 26, 27, 0.09);
+  --shadow-lg: 0 18px 40px rgba(12, 26, 27, 0.1);
+  --shadow-glass: 0 24px 60px rgba(0, 0, 0, 0.28);
+
+  /* ── Motion ────────────────────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+
+  /* ── Layout ────────────────────────────────────────────────────────── */
+  --layout-max: 1720px;
+  --nav-height: 4.5rem;
+  --scroll-offset: 6.25rem;
+
+  /* ── Layers ────────────────────────────────────────────────────────── */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 80;
+  --z-overlay: 100;
+  --z-skip-link: 1000;
+}
+
+/*
+ * Arabic falls back to Cairo, which carries a taller x-height and needs a
+ * looser leading than Manrope to stay comfortable.
+ */
+html[lang="ar"] {
+  --font-sans: "Cairo", "Manrope", system-ui, sans-serif;
+  --leading-tight: 1.35;
+  --leading-snug: 1.4;
+  --leading-relaxed: 1.85;
+}

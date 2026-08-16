@@ -1,0 +1,159 @@
+/*
+ * The one button in the system, in four grounds. Every variant is a pill with
+ * an optional circular arrow badge; only the colours change, so the whole set
+ * keeps one silhouette.
+ */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-family: inherit;
+  font-size: var(--text-base);
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+
+  /* 44px minimum touch target, met by padding rather than a fixed height so
+     the label can wrap on narrow screens without being clipped. */
+  min-height: 2.75rem;
+  padding-block: var(--space-3);
+  padding-inline: var(--space-5);
+
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
+}
+
+/* With a trailing badge the inline-end padding tightens to sit against it. */
+.hasBadge {
+  padding-inline-end: var(--space-2);
+}
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ── Badge ───────────────────────────────────────────────────────────── */
+.badge {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+/* The arrow points along the reading direction. */
+[dir="rtl"] .badge {
+  transform: scaleX(-1);
+}
+
+.button:hover .badge {
+  transform: translateX(0.125rem);
+}
+
+[dir="rtl"] .button:hover .badge {
+  transform: scaleX(-1) translateX(0.125rem);
+}
+
+/* ── Variants ────────────────────────────────────────────────────────── */
+
+/* Teal on paper — the header's standing call to action. */
+.teal {
+  background: var(--color-teal);
+  color: var(--color-text-on-dark);
+}
+.teal:hover {
+  background: var(--color-teal-hover);
+  color: var(--color-text-on-dark);
+}
+.teal .badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--color-text-on-dark);
+}
+
+/* Ink on paper — secondary emphasis inside light sections. */
+.ink {
+  background: var(--color-ink);
+  color: var(--color-text-on-dark);
+}
+.ink:hover {
+  background: var(--color-ink-raised);
+  color: var(--color-text-on-dark);
+}
+.ink .badge {
+  background: var(--color-teal);
+  color: var(--color-text-on-dark);
+}
+
+/* White on photography — the hero's primary action. */
+.light {
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+.light:hover {
+  background: var(--color-teal-soft);
+  color: var(--color-ink);
+}
+.light .badge {
+  background: var(--color-teal);
+  color: var(--color-text-on-dark);
+}
+
+/* Glass on photography — the hero's secondary action. */
+.ghost {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.34);
+  color: var(--color-text-on-dark);
+  font-weight: 600;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.ghost:hover {
+  background: rgba(255, 255, 255, 0.24);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: var(--color-text-on-dark);
+}
+
+/* ── Modifiers ───────────────────────────────────────────────────────── */
+.block {
+  width: 100%;
+}
+
+/* A spinner replaces the badge while a submission is in flight. */
+.spinner {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+}
+
+.spinner::after {
+  content: "";
+  width: 1.0625rem;
+  height: 1.0625rem;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  opacity: 0.85;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

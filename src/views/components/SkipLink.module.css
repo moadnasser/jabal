@@ -1,0 +1,33 @@
+/*
+ * Keyboard escape hatch past the header. Off-screen until focused, at which
+ * point it becomes the most prominent thing on the page.
+ */
+
+.skipLink {
+  position: fixed;
+  inset-block-start: var(--space-3);
+  inset-inline-start: var(--space-3);
+  z-index: var(--z-skip-link);
+
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
+  background: var(--color-teal);
+  box-shadow: var(--shadow-sm);
+
+  color: var(--color-text-on-dark);
+  font-size: var(--text-base);
+  font-weight: 700;
+  text-decoration: none;
+
+  /* Moved out of view rather than hidden, so it stays focusable. */
+  transform: translateY(-200%);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.skipLink:hover {
+  color: var(--color-text-on-dark);
+}
+
+.skipLink:focus-visible {
+  transform: none;
+}

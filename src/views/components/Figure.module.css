@@ -1,0 +1,68 @@
+/*
+ * Photographic frame. The wrapper reserves the aspect ratio before anything
+ * loads, so an image arriving late never shifts the layout under the reader.
+ */
+
+.figure {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background: var(--color-ink);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Placeholder ─────────────────────────────────────────────────────── */
+/*
+ * Shown when the photograph is absent or fails to load. It is a designed
+ * state, not an error state: a branded ink-to-teal field with the section's
+ * own icon, so a missing asset reads as intentional rather than broken.
+ */
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  gap: var(--space-3);
+  align-content: center;
+  padding: var(--space-6);
+  text-align: center;
+  background:
+    radial-gradient(
+      120% 90% at 20% 15%,
+      color-mix(in srgb, var(--color-teal) 55%, transparent) 0%,
+      transparent 60%
+    ),
+    linear-gradient(140deg, var(--color-ink-raised) 0%, var(--color-ink) 100%);
+  color: var(--color-teal-light);
+}
+
+/* A faint diagonal hatch, so the field reads as a surface rather than a void. */
+.placeholder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.045) 0 1px,
+    transparent 1px 11px
+  );
+  pointer-events: none;
+}
+
+.placeholderIcon {
+  opacity: 0.9;
+}
+
+.placeholderLabel {
+  position: relative;
+  max-width: 24ch;
+  color: var(--color-text-on-dark-muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: var(--leading-normal);
+}

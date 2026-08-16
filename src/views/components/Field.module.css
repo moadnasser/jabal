@@ -1,0 +1,92 @@
+/* A labelled form control with helper text and an inline error slot. */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4375rem;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* Muted, not red: a required marker sitting in the danger colour reads as an
+   error on a field the visitor hasn't touched yet. */
+.required {
+  color: var(--color-text-muted);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  opacity: 0.8;
+}
+
+.control {
+  width: 100%;
+  min-height: 2.875rem; /* ≥44px touch target, and ≥16px text stops iOS zoom */
+  padding: var(--space-3) var(--space-5);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: var(--leading-normal);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+/* A textarea needs corners, not a pill. */
+textarea.control {
+  min-height: 7rem;
+  border-radius: var(--radius-md);
+  resize: vertical;
+}
+
+.control::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1; /* Firefox dims placeholders by default; we've already measured this */
+}
+
+.control:hover {
+  border-color: color-mix(in srgb, var(--color-ink) 32%, transparent);
+}
+
+.control:focus-visible {
+  border-color: var(--color-teal);
+  outline-offset: 1px;
+}
+
+.control[aria-invalid="true"] {
+  border-color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 4%, var(--color-paper));
+}
+
+.hint {
+  padding-inline: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+  padding-inline: var(--space-2);
+  color: var(--color-danger);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: var(--leading-normal);
+}
+
+.errorIcon {
+  flex: none;
+  margin-block-start: 0.0625rem;
+}

@@ -1,0 +1,61 @@
+/*
+ * Language switch. Rendered as a radio group rather than two buttons: the two
+ * options are mutually exclusive states of one setting, and a radio group is
+ * what tells a screen reader that — and which one is currently chosen.
+ */
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.3125rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-teal-soft);
+}
+
+.option {
+  border: 0;
+  border-radius: var(--radius-pill);
+  padding: 0.4375rem var(--space-3);
+  background: transparent;
+  color: var(--color-teal);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.option:hover {
+  background: color-mix(in srgb, var(--color-teal) 14%, transparent);
+}
+
+.option[aria-checked="true"] {
+  background: var(--color-teal);
+  color: var(--color-text-on-dark);
+}
+
+/* ── Stacked variant, used inside the mobile panel ───────────────────── */
+.stacked {
+  display: flex;
+  gap: var(--space-2);
+  padding: 0;
+  background: none;
+}
+
+.stacked .option {
+  flex: 1;
+  min-height: 2.875rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  font-size: 0.875rem;
+}
+
+.stacked .option[aria-checked="true"] {
+  border-color: var(--color-teal);
+  background: var(--color-teal);
+  color: var(--color-text-on-dark);
+}
