@@ -1,3 +1,10 @@
+import heroSteelLarge from "../assets/hero-steel-1400.jpg";
+import heroSteelSmall from "../assets/hero-steel-760.jpg";
+import aboutMainLarge from "../assets/about-main-900.jpg";
+import aboutMainSmall from "../assets/about-main-600.jpg";
+import aboutInsetImage from "../assets/about-inset-500.jpg";
+import { LQIP } from "../assets/lqip.js";
+
 /**
  * Site model — the facts about the business that do not change with language.
  * Phone numbers, addresses, section ids and social handles all live here so a
@@ -57,15 +64,42 @@ export const SOCIAL_LINKS = [
 ];
 
 /**
- * Photography. `src` points into /public; when a file is absent the `Figure`
- * view falls back to a branded placeholder, so the layout never collapses.
- * `width`/`height` are the intrinsic pixel sizes and exist to reserve space
- * against layout shift.
+ * Photography.
+ *
+ * Derived from the original design exports in /assets by
+ * `scripts/build-images.mjs`, which emits the responsive JPEGs and the `lqip`
+ * thumbnails imported above. Each entry is passed whole to `Figure`:
+ *
+ * - `src` / `srcSet` / `sizes` — let the browser pick a width, so a phone
+ *   never downloads the desktop file.
+ * - `width` / `height` — the intrinsic pixel size, which reserves the box
+ *   before anything loads and keeps cumulative layout shift at zero.
+ * - `lqip` — a ~20px thumbnail as a data URI, painted blurred behind the
+ *   photo until it decodes.
  */
 export const MEDIA = {
-  hero: { src: "/images/hero-steel.png", width: 1400, height: 930 },
-  aboutMain: { src: "/images/about-main.png", width: 900, height: 675 },
-  aboutInset: { src: "/images/about-inset.png", width: 500, height: 500 },
+  hero: {
+    src: heroSteelLarge,
+    srcSet: `${heroSteelSmall} 760w, ${heroSteelLarge} 1400w`,
+    sizes: "100vw",
+    width: 1400,
+    height: 930,
+    lqip: LQIP.hero,
+  },
+  aboutMain: {
+    src: aboutMainLarge,
+    srcSet: `${aboutMainSmall} 600w, ${aboutMainLarge} 900w`,
+    sizes: "(max-width: 900px) 92vw, 45vw",
+    width: 900,
+    height: 675,
+    lqip: LQIP.aboutMain,
+  },
+  aboutInset: {
+    src: aboutInsetImage,
+    width: 500,
+    height: 500,
+    lqip: LQIP.aboutInset,
+  },
 };
 
 export const FOUNDED_YEAR = 1999;

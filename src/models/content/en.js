@@ -78,8 +78,9 @@ const en = {
     cta: "Know more",
     questionLabel: "Have a question?",
     badge: { value: "25+", label: "Years in business" },
-    mainImageAlt: "The Jabal Al Hadeed sales floor stocked with power tools",
-    insetImageAlt: "Close-up of a power drill on a workbench",
+    mainImageAlt:
+      "Steel gantries and walkways inside a heavy industrial plant, lit amber from below",
+    insetImageAlt: "Overhead crane hooks hanging in a hazy steel mill hall",
   },
 
   stats: {

@@ -9,15 +9,8 @@ export function Hero() {
 
   return (
     <section className={styles.hero} aria-labelledby="hero-title">
-      <Figure
-        className={styles.media}
-        src={MEDIA.hero.src}
-        width={MEDIA.hero.width}
-        height={MEDIA.hero.height}
-        alt=""
-        priority
-        icon="logo"
-      />
+      {/* Decorative: the hero's meaning is carried entirely by the panel text. */}
+      <Figure className={styles.media} media={MEDIA.hero} alt="" priority icon="logo" />
       <div className={styles.scrim} />
 
       <div className={styles.panel}>

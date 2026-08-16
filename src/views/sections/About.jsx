@@ -18,24 +18,24 @@ export function About() {
       <div className={styles.media}>
         <Figure
           className={styles.mediaMain}
-          src={MEDIA.aboutMain.src}
-          width={MEDIA.aboutMain.width}
-          height={MEDIA.aboutMain.height}
+          media={MEDIA.aboutMain}
           alt={about.mainImageAlt}
           ratio="4 / 3"
           icon="home"
+          glass
         />
 
         <Figure
           className={styles.mediaInset}
-          src={MEDIA.aboutInset.src}
-          width={MEDIA.aboutInset.width}
-          height={MEDIA.aboutInset.height}
+          media={MEDIA.aboutInset}
           alt={about.insetImageAlt}
           ratio="1"
           icon="wrench"
+          glass
         />
 
+        {/* Frosted plate floating on the photograph — the one place on the
+            page where there is a real image to blur behind the glass. */}
         <p className={styles.badge}>
           <span className={styles.badgeValue} data-numeric>
             {about.badge.value}

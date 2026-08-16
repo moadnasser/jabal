@@ -8,12 +8,94 @@
   overflow: hidden;
   border-radius: var(--radius-xl);
   background: var(--color-ink);
+  isolation: isolate;
+}
+
+/* ── Blur-up ─────────────────────────────────────────────────────────── */
+/*
+ * The LQIP thumbnail, blown up to fill the frame and blurred past the point
+ * where its 20px of detail could read as pixels. `scale` pushes the softened
+ * edges outside the frame — a blur samples transparent pixels beyond its own
+ * bounds otherwise, and the result is a pale halo around all four sides.
+ */
+.blurUp {
+  position: absolute;
+  inset: 0;
+  background-image: var(--lqip);
+  background-size: cover;
+  background-position: center;
+  filter: blur(24px) saturate(1.2);
+  transform: scale(1.15);
+  /* Held until the real image has faded in, then dropped — a blurred layer
+     under a photograph is invisible but still costs compositing. */
+  transition: opacity var(--duration-slow) var(--ease-out) 120ms;
+}
+
+.isLoaded .blurUp {
+  opacity: 0;
 }
 
 .image {
+  position: relative;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+}
+
+.isLoaded .image {
+  opacity: 1;
+}
+
+/*
+ * With animation suppressed the crossfade is meaningless — show the
+ * photograph immediately rather than leaving it at opacity 0 until a
+ * transition that will never run.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .image {
+    opacity: 1;
+  }
+
+  .blurUp {
+    display: none;
+  }
+}
+
+/* ── Glass ───────────────────────────────────────────────────────────── */
+/*
+ * Two coats. The rim is an inset hairline that catches light all the way
+ * round, the way the cut edge of a pane does; the sheen is a raking highlight
+ * across the top-left falling off to nothing by the middle. Both are pure
+ * overlay — no backdrop-filter, because there is nothing behind a photograph
+ * worth blurring, and the cost on a full-bleed hero is real.
+ */
+.glass {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.22);
+}
+
+.sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      147deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.05) 22%,
+      transparent 48%
+    ),
+    radial-gradient(
+      140% 100% at 50% 118%,
+      color-mix(in srgb, var(--color-teal) 40%, transparent) 0%,
+      transparent 62%
+    );
+  mix-blend-mode: screen;
+  opacity: 0.85;
+  transition: opacity var(--duration-base) var(--ease-out);
 }
 
 /* ── Placeholder ─────────────────────────────────────────────────────── */

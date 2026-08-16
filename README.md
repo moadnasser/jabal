@@ -78,15 +78,39 @@ first-time visitor gets their browser's preference.
 
 ## Photography
 
-`MEDIA` in `models/site.js` points at `/images/*.png`. **Those files are not in
-the repo** — the design project's originals exceed the 256 KiB ceiling on the
-Claude Design MCP's file read, so only a fraction of each could be retrieved.
+```
+assets/*.png        original design exports — source of truth, never shipped
+   │  node scripts/build-images.mjs
+   ▼
+src/assets/*.jpg    responsive derivatives, imported and hashed by Vite
+src/assets/lqip.js  generated 20px thumbnails as data URIs
+```
 
-`Figure` renders a designed placeholder — a branded ink-to-teal field with the
-section's icon — whenever an image is missing or fails to load. Dropping the
-real exports into `public/images/` under the names in `MEDIA` is therefore a
-file copy with no code change, and the reserved aspect ratios mean no layout
-shift either way.
+The originals are 4.3 MB of lossless PNG. `scripts/build-images.mjs` derives a
+responsive JPEG pair per photo plus an LQIP thumbnail, taking the shipped set
+to 910 KB — and a phone only pulls the small variants, about 300 KB. Re-run it
+when the source photography changes; the outputs are committed. It shells out
+to macOS `sips`, so it is Mac-only.
+
+`MEDIA` in `models/site.js` hands each entry to `Figure` whole, which gives
+three things at once:
+
+- **Responsive loading** — `srcSet`/`sizes` let the browser pick a width.
+- **Blur-up** — the LQIP is painted scaled and blurred behind the photo, so
+  the frame carries the image's own colours from the first paint and the sharp
+  version crossfades in over it.
+- **Glass edge** — an inset rim and a raking highlight, so the photo reads as
+  sitting under a pane. Opt in with `glass`.
+
+`width`/`height` are always declared, so the box is reserved before anything
+loads and cumulative layout shift stays at zero. If a file 404s, `Figure`
+degrades to a branded ink-to-teal placeholder rather than collapsing.
+
+The one place a real backdrop blur is used is the About section's "25+ years"
+plate, which floats on the photograph — `backdrop-filter` there is blurring
+something genuine. It carries an ink base under the white so its text keeps
+contrast wherever it sits, and an opaque `@supports` fallback for engines
+without `backdrop-filter`.
 
 ## Accessibility
 
